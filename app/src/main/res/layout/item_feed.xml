@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.clicknext.kmutnb.model.Feed" />  <!--binding to model-->
+
+        <variable
+            name="position"
+            type="Integer" />
+        
+        <variable
+            name="listener"
+            type="com.clicknext.kmutnb.feature.adapter.FeedAdapter.OnItemClickListerner" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clyMainView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/mercury"
+        android:orientation="vertical"
+        android:onClickListener="@{() -> listener.onItemClick()}">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imvProfile"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/ic_circle"
+                imageUrl="@{model.imageUrl}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txvName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="@{model.name}"
+                android:textColor="@color/outer_space"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imvProfile"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txvDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd="16dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@{model.date}"
+                android:textColor="@color/pale_sky"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imvProfile"
+                app:layout_constraintTop_toBottomOf="@+id/txvName" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clyContent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/imvProfile"
+                app:layout_constraintTop_toBottomOf="@+id/txvDate">
+
+                <TextView
+                    android:id="@+id/txvContentPost"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="@{model.detail}"
+                    android:textColor="@color/outer_space"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/txvLike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="16dp"
+                android:drawablePadding="5dp"
+                android:text="@{model.likeCount}"
+                isLike = "@{model.like}"
+                android:onClick="@{() -> listener.onClickLike(position)}"
+                android:textColor="@color/outer_space"
+                android:textSize="12sp"
+                app:drawableLeftCompat="@mipmap/ic_like"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/clyContent"
+                app:layout_goneMarginStart="16dp" />
+
+            <TextView
+                android:id="@+id/txvComment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:drawablePadding="5dp"
+                android:text="@{model.commentCount}"
+                android:textColor="@color/outer_space"
+                android:textSize="12sp"
+                app:drawableStartCompat="@mipmap/ic_comment"
+                app:layout_constraintBottom_toBottomOf="@+id/txvLike"
+                app:layout_constraintStart_toEndOf="@+id/txvLike"
+                app:layout_constraintTop_toTopOf="@+id/txvLike" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:drawablePadding="5dp"
+                android:text="share"
+                android:textColor="@color/outer_space"
+                android:textSize="12sp"
+                app:drawableStartCompat="@mipmap/ic_share"
+                app:layout_constraintBottom_toBottomOf="@+id/txvLike"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/txvLike" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
